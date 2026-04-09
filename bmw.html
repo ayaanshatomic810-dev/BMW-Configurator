@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMW Car Configuration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d3436 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #1a1a1a;
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #1a1a1a;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .form-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-section h2 {
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            border-bottom: 2px solid #e74c3c;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #e74c3c;
+            box-shadow: 0 0 5px rgba(231, 76, 60, 0.3);
+        }
+
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit {
+            background: #e74c3c;
+            color: white;
+            grid-column: 1 / -1;
+        }
+
+        .btn-submit:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        .btn-reset {
+            background: #95a5a6;
+            color: white;
+            grid-column: 1 / -1;
+        }
+
+        .btn-reset:hover {
+            background: #7f8c8d;
+            transform: translateY(-2px);
+        }
+
+        .details-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .details-section h2 {
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .car-display {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 3px solid #1a1a1a;
+        }
+
+        .car-emoji {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .car-name {
+            font-size: 2em;
+            font-weight: bold;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+
+        .car-model {
+            font-size: 1.3em;
+            color: #e74c3c;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .details-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .detail-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #e74c3c;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .detail-label {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            color: #1a1a1a;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #95a5a6;
+            padding: 40px 20px;
+            font-size: 1.1em;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .car-emoji {
+                font-size: 60px;
+            }
+
+            .car-name {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏎️ BMW Car Configurator</h1>
+            <p>Create and customize your dream BMW</p>
+        </div>
+
+        <div class="content">
+            <div class="form-section">
+                <h2>Configure Your BMW</h2>
+                <form id="bmwForm">
+                    <div class="form-group">
+                        <label for="carName">Car Name:</label>
+                        <input type="text" id="carName" placeholder="e.g., BMW" value="BMW" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="carColour">Choose Car Colour:</label>
+                        <select id="carColour" required>
+                            <option value="">-- Select Colour --</option>
+                            <option value="White">White</option>
+                            <option value="Black">Black</option>
+                            <option value="Silver">Silver</option>
+                            <option value="Grey">Grey</option>
+                            <option value="Blue">Blue</option>
+                            <option value="Red">Red</option>
+                            <option value="Green">Green</option>
+                            <option value="Yellow">Yellow</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="carModel">Car Model Name:</label>
+                        <select id="carModel" required>
+                            <option value="">-- Select Model --</option>
+                            <option value="X7">X7 - Luxury SUV</option>
+                            <option value="X5">X5 - Performance SUV</option>
+                            <option value="X3">X3 - Compact SUV</option>
+                            <option value="M440i">M440i - Sedan</option>
+                            <option value="i8">i8 - Hybrid Sport</option>
+                            <option value="M5">M5 - Performance Sedan</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="carEngine">Engine Type:</label>
+                        <select id="carEngine" required>
+                            <option value="">-- Select Engine --</option>
+                            <option value="V8">V8 - 8 Cylinder</option>
+                            <option value="V6">V6 - 6 Cylinder</option>
+                            <option value="I4">I4 - 4 Cylinder</option>
+                            <option value="Hybrid">Hybrid Electric</option>
+                            <option value="Electric">Full Electric</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="carSpeed">Max Car Speed:</label>
+                        <input type="text" id="carSpeed" placeholder="e.g., 130mph" value="130mph" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="carFeature">Special Feature:</label>
+                        <select id="carFeature" required>
+                            <option value="">-- Select Feature --</option>
+                            <option value="Charger">Fast Charger</option>
+                            <option value="Sunroof">Panoramic Sunroof</option>
+                            <option value="Autopilot">Autopilot System</option>
+                            <option value="Premium Sound">Premium Sound System</option>
+                            <option value="Heated Seats">Heated Seats</option>
+                            <option value="Leather Interior">Luxury Leather Interior</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="carScreen">Screen Size:</label>
+                        <select id="carScreen" required>
+                            <option value="">-- Select Screen Size --</option>
+                            <option value="7-inch Small">7-inch Small</option>
+                            <option value="10-inch Medium">10-inch Medium</option>
+                            <option value="12-inch Large">12-inch Large</option>
+                            <option value="15-inch XL">15-inch XL</option>
+                        </select>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="submit" class="btn btn-submit">Create Car</button>
+                        <button type="reset" class="btn btn-reset">Reset Form</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="details-section">
+                <h2>Car Details</h2>
+                <div id="carDisplay" class="empty-state">
+                    Fill out the form and click "Create Car" to see your BMW details here.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('bmwForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get form values
+            const carName = document.getElementById('carName').value || 'BMW';
+            const carColour = document.getElementById('carColour').value;
+            const carModel = document.getElementById('carModel').value;
+            const carEngine = document.getElementById('carEngine').value;
+            const carSpeed = document.getElementById('carSpeed').value;
+            const carFeature = document.getElementById('carFeature').value;
+            const carScreen = document.getElementById('carScreen').value;
+
+            // Create the display HTML
+            const displayHTML = `
+                <div class="car-display">
+                    <div class="car-emoji">🏎️</div>
+                    <div class="car-name">${carName}</div>
+                    <div class="car-model">${carModel}</div>
+                </div>
+                <div class="details-list">
+                    <div class="detail-item">
+                        <div class="detail-label">🎨 Car Colour</div>
+                        <div class="detail-value">${carColour}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">🔧 Engine Type</div>
+                        <div class="detail-value">${carEngine}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">⚡ Max Speed</div>
+                        <div class="detail-value">${carSpeed}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">✨ Special Feature</div>
+                        <div class="detail-value">${carFeature}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">📺 Screen Size</div>
+                        <div class="detail-value">${carScreen}</div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('carDisplay').innerHTML = displayHTML;
+        });
+    </script>
+</body>
+</html>
